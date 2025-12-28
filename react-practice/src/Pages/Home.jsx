@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import products from './Prodcuts'
 import { useNavigate } from 'react-router-dom'
+import About from './About'
 
 
 function Home() {
@@ -11,7 +12,12 @@ const [count,setCount]=useState( Array(products.length).fill(0))
     newCounts[index] += 1
     setCount(newCounts)
   }
-
+const[user,setUser]=useState({
+  name:"",age:""
+})
+function dataShare(){
+  navigate("/About",{state:user})
+}
   return (
     <>
     <h1>Home page</h1>
@@ -32,6 +38,16 @@ const [count,setCount]=useState( Array(products.length).fill(0))
             </div>
     ))}
     </div>
+    {/* Form data sharing to About Component Using useState Hook */}
+    <form action="">
+      <input type="text" placeholder='Name' onChange={(e)=>setUser({...user,name:e.target.value})} />
+      <input type="text" placeholder='Age' onChange={(e)=>setUser({...user,age:e.target.value})}/>
+    </form>
+   <button onClick={dataShare}>
+  Show About
+</button>
+
+
     </>
   )
 }
