@@ -14,5 +14,10 @@ const a = [1, 2, 3]
 Array(3).fill(0)
 Fills every slot with 0:[0, 0, 0]
 
+const arr = [1, 2, 3, 4, 5]
+arr.fill(9, 1, 4)
+
+console.log(arr)
+
 newCounts[index] += 1
 Increases count for only that product
