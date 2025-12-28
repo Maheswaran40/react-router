@@ -1,0 +1,18 @@
+const a = [1, 2, 3]
+ const b = a
+
+ b[0] = 99
+ console.log(a) // [99, 2, 3] ❌
+
+ const a = [1, 2, 3]
+ const b = [...a]
+
+ b[0] = 99
+ console.log(a) // [1, 2, 3] ✅
+
+
+Array(3).fill(0)
+Fills every slot with 0:[0, 0, 0]
+
+newCounts[index] += 1
+Increases count for only that product
