@@ -21,3 +21,28 @@ console.log(arr)
 
 newCounts[index] += 1
 Increases count for only that product
+
+
+# useEffect hook
+
+React Hook used to perform side effects in a functional component.
+
+## Side effects mean actions outside normal rendering, like:
+
+Fetching data from an API
+
+Updating the DOM
+
+Using timers (setTimeout, setInterval)
+
+Reading from localStorage
+
+Running code after component loads
+
+## It runs after the component renders.
+
+** Syntax **
+
+useEffect(() => {
+  // side effect code
+}, [dependencies]);
