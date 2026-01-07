@@ -6,6 +6,7 @@ import Products from "./Pages/Products";
 import Error from "./Pages/Error";
 import About from "./Pages/About";
 import ContextPrvide from "./Context/ContextPrvide";
+import UseRefFile from "./useRefFolder/UseRefFile";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="*" element={<Error />} />
             <Route path="/About" element={<About />} />
+            <Route path="/useref" element={<UseRefFile />} />
             <Route path="/products/:id" element={<Products />} />
           </Routes>
         </ContextPrvide>
