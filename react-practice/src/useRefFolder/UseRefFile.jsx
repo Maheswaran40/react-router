@@ -1,41 +1,97 @@
+// import React, { useEffect, useRef } from 'react'
+
+// function UseRefFile() {
+//     console.log("Single Render");
+    
+//     const inputRef=useRef(null)
+//     useEffect(() => {
+//     inputRef.current.focus(); // direct DOM access
+//   }, []);
+
+
+//    const countRef = useRef(0);
+
+//   const handleClick = () => {
+//     countRef.current += 1;
+//     console.log("Clicked:", countRef.current);
+//   };
+//  const timerRef = useRef(null);
+
+//   const start = () => {
+//     timerRef.current = setInterval(() => {
+//       console.log("Running...");
+//     }, 1000);
+//   };
+
+//   const stop = () => {
+//     clearInterval(timerRef.current);
+//   };
+//   return (
+//     <>
+//     <form action="" >
+//         <input type="text" ref={inputRef}/>
+//         <input type="submit" />
+//     </form>
+//     <button onClick={handleClick}>Increase</button>
+//      <button onClick={start}>Start</button>
+//       <button onClick={stop}>Stop</button>
+
+//     </>
+//   )
+// }
+
+// export default UseRefFile
 import React, { useEffect, useRef } from 'react'
 
 function UseRefFile() {
-    console.log("Single Render");
-    
-    const inputRef=useRef(null)
-    useEffect(() => {
-    inputRef.current.focus(); // direct DOM access
-  }, []);
+  console.log("single render only");
+  
+  var increaseRef=useRef()
+  var FocusRef=useRef()
+  function increaseFun(){
+    increaseRef.current.innerText ++
 
+  }
 
-   const countRef = useRef(0);
+  useEffect(()=>{
+    FocusRef.current.focus()
+  },[])
 
-  const handleClick = () => {
-    countRef.current += 1;
-    console.log("Clicked:", countRef.current);
-  };
- const timerRef = useRef(null);
+  var timeRef=useRef(null)
+  
+  function StartFun(){
 
-  const start = () => {
-    timerRef.current = setInterval(() => {
-      console.log("Running...");
+    timeRef.current=setInterval(() => {
+      console.log("Running ....");
+      
     }, 1000);
-  };
+  }
+  function StopFun(){
+    clearInterval(timeRef.current)
+    alert("puriyalanu sollathinga")
+  }
+   const pos = useRef({ x: 0, y: 0 });
 
-  const stop = () => {
-    clearInterval(timerRef.current);
+  const handleMove = (e) => {
+    pos.current = { x: e.clientX, y: e.clientY };
+    
+    console.log(pos.current,"axis");
   };
-  return (
+    return (
     <>
-    <form action="" >
-        <input type="text" ref={inputRef}/>
-        <input type="submit" />
-    </form>
-    <button onClick={handleClick}>Increase</button>
-     <button onClick={start}>Start</button>
-      <button onClick={stop}>Stop</button>
 
+      <h1 ref={increaseRef}>0</h1>
+      <button onClick={increaseFun} className='btn btn-primary'>Increase</button>
+
+      <input type="text" placeholder='Name' ref={FocusRef}/>
+      <button onClick={StartFun}>Start</button>
+      <button onClick={StopFun}>stop</button>
+      <div
+      onMouseMove={handleMove}
+      style={{ height: "100vh" }}
+    >
+      Move mouse & check console 🐭
+    </div>
     </>
   )
 }

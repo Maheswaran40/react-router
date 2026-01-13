@@ -7,6 +7,8 @@ import Error from "./Pages/Error";
 import About from "./Pages/About";
 import ContextPrvide from "./Context/ContextPrvide";
 import UseRefFile from "./useRefFolder/UseRefFile";
+import CRUD from "./CRUD";
+import Crud2 from "./Crud2";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <ContextPrvide>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/crud" element={<CRUD />} />
+            <Route path="/crud2" element={<Crud2 />} />
             <Route path="*" element={<Error />} />
             <Route path="/About" element={<About />} />
             <Route path="/useref" element={<UseRefFile />} />
