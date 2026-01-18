@@ -9,6 +9,8 @@ import ContextPrvide from "./Context/ContextPrvide";
 import UseRefFile from "./useRefFolder/UseRefFile";
 import CRUD from "./CRUD";
 import Crud2 from "./Crud2";
+import Login from "./Pages/Login";
+import Protect from "./Pages/Protect";
 
 function App() {
   return (
@@ -16,7 +18,8 @@ function App() {
       <BrowserRouter>
         <ContextPrvide>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/home" element={<Protect><Home /></Protect>} />
             <Route path="/crud" element={<CRUD />} />
             <Route path="/crud2" element={<Crud2 />} />
             <Route path="*" element={<Error />} />

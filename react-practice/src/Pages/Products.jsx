@@ -8,6 +8,7 @@ function Products() {
      if (!product) {
     return <h2>Loading product...</h2>;
   }
+
   return (
     <>
 

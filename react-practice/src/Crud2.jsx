@@ -7,8 +7,8 @@ function Crud2() {
   var [viewModal, setViewModal] = useState(false);
   var [viewText, setViewText] = useState("");
 
-  var [edit, setEdit] = useState("");
-  var [editText, setEditText] = useState("");
+  var[edit,setEdit]=useState("")
+  var[editText,setEditText]=useState("")
 
   function addFun(e) {
     e.preventDefault();
@@ -30,17 +30,16 @@ function Crud2() {
   function delFun(index) {
     setList(list.filter((value, i) => i !== index));
   }
-
-  function editFun(index) {
-    setEdit(index);
-    setEditText(list[index]);
+  function editFun(index){
+    setEdit(index)
+    setEditText(list[index])
   }
-  function updateFun() {
-    setList(list.map((value, index) => (edit === index ? editText : value)));
-    setEdit("");
+  function editInput(e){
+    setEditText(e.target.value)
   }
-  function editTextFun(e) {
-    setEditText(e.target.value);
+  function updateFun(){
+    setList(list.map((value,index)=>(edit===index ? editText:value)))
+    setEdit("")
   }
   return (
     <>
@@ -63,21 +62,15 @@ function Crud2() {
         <tbody>
           {list.map((value, index) => (
             <tr key={index}>
-              {edit === index ? (
-                <td>
-                  <input type="text" value={editText} onChange={editTextFun} />
-                </td>
-              ) : (
-                <td>{value}</td>
-              )}
-
+              <td>
+                {edit === index ? <input type="text" value={editText} onChange={editInput}/>:value}
+                
+               
+              </td>
               <td className="d-flex justify-content-between">
                 <button onClick={() => viewFun(value)}>button1</button>
-                {edit === index ? (
-                  <button onClick={updateFun}>update</button>
-                ) : (
-                  <button onClick={() => editFun(index)}>Edit</button>
-                )}
+                {edit === index ?  <button onClick={updateFun}>update</button>: <button onClick={()=>editFun(index)}>Edit</button>}
+              
 
                 <button onClick={() => delFun(index)}>button3</button>
               </td>
