@@ -23,7 +23,7 @@ function App() {
             <Route path="/crud" element={<CRUD />} />
             <Route path="/crud2" element={<Crud2 />} />
             <Route path="*" element={<Error />} />
-            <Route path="/About" element={<About />} />
+            <Route path="/About" element={<Protect><About /></Protect>} />
             <Route path="/useref" element={<UseRefFile />} />
             <Route path="/products/:id" element={<Products />} />
           </Routes>
