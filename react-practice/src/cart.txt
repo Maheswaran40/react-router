@@ -1,0 +1,138 @@
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import products from "./Prodcuts";
+import { Mycontext } from "../Context/Mycontext";
+import Navbar from "../Navbar";
+
+function Home() {
+  const navigate = useNavigate();
+  const { theme } = useContext(Mycontext);
+
+  // ---------------- CART STATE ----------------
+  const [cart, setCart] = useState([]);
+
+  // ---------------- ADD TO CART ----------------
+  function cartFun(proID) {
+    const cartData = products.find(item => item.id === proID);
+    const existing = cart.some(item => item.id === proID);
+
+    if (!existing) {
+      const newItem = { ...cartData, quantity: 1 };
+      setCart([...cart, newItem]);
+    }
+  }
+
+  // ---------------- INCREASE QTY ----------------
+  function increaseQty(id) {
+    const updatedCart = cart.map(item =>
+      item.id === id
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
+    );
+    setCart(updatedCart);
+  }
+
+  // ---------------- DECREASE QTY ----------------
+  function decreaseQty(id) {
+    const updatedCart = cart.map(item =>
+      item.id === id && item.quantity > 1
+        ? { ...item, quantity: item.quantity - 1 }
+        : item
+    );
+    setCart(updatedCart);
+  }
+
+  // ---------------- DELETE ITEM ----------------
+  function deleteItem(id) {
+    const updatedCart = cart.filter(item => item.id !== id);
+    setCart(updatedCart);
+  }
+
+  // ---------------- TOTAL PRICE (DERIVED) ----------------
+  const totalPrice = cart.reduce(
+    (sum, item) => sum + Number(item.Price) * item.quantity,
+    0
+  );
+
+  // ---------------- UI ----------------
+  return (
+    <>
+      <Navbar />
+      <h1>Home Page</h1>
+
+      {/* PRODUCTS LIST */}
+      <div className="row">
+        {products.map((value) => (
+          <div className="col-lg-4 col-sm-6" key={value.id}>
+            <div className="card p-2">
+              <img
+                src={value.image}
+                height="200"
+                alt=""
+                onClick={() => navigate(`/products/${value.id}`)}
+              />
+              <div className="card-body">
+                <h5>{value.name}</h5>
+                <p>₹{value.Price}</p>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => cartFun(value.id)}
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* CART BUTTON */}
+      <button
+        className="btn btn-success mt-3"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#cartoff"
+      >
+        Show Cart
+      </button>
+
+      {/* CART OFFCANVAS */}
+      <div
+        className="offcanvas offcanvas-top"
+        id="cartoff"
+        style={{ height: "400px" }}
+      >
+        <div className="offcanvas-header">
+          <h3>Total: ₹{totalPrice}</h3>
+        </div>
+
+        <div className="offcanvas-body">
+          {cart.length === 0 && <h4>Cart is empty</h4>}
+
+          {cart.map(item => (
+            <div key={item.id} className="d-flex gap-3 mb-3">
+              <img src={item.image} height="80" />
+
+              <div>
+                <h5>{item.name}</h5>
+                <p>₹{item.Price}</p>
+
+                <button onClick={() => decreaseQty(item.id)}>-</button>
+                <span className="mx-2">{item.quantity}</span>
+                <button onClick={() => increaseQty(item.id)}>+</button>
+
+                <button
+                  className="btn btn-danger btn-sm ms-3"
+                  onClick={() => deleteItem(item.id)}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default Home;
