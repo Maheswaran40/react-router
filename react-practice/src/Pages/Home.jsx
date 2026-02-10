@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import products from "./Prodcuts";
 import { useNavigate } from "react-router-dom";
 import { Mycontext } from "../Context/Mycontext";
-
+import { toast } from 'react-toastify';
 function Home() {
   var navigate = useNavigate();
   const { a, theme,ThemeChange } = useContext(Mycontext);
@@ -20,6 +20,7 @@ function Home() {
   });
   function dataShare() {
     navigate("/About", { state: user });
+    toast.success("welcome !")
   }
   var Style1 = {
     backgroundColor: theme === "light" ? "#fff" : "#121212",

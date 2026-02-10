@@ -1,130 +1,122 @@
 import React, { useState } from "react";
 
 function Crud2() {
+
+
+ var url="http://localhost:3000"
+
   var [input, setInput] = useState("");
   var [list, setList] = useState([]);
 
-  var [viewModal, setViewModal] = useState(false);
+  var [modal, setModal] = useState(false);
   var [viewText, setViewText] = useState("");
-
   var [edit, setEdit] = useState("");
-  var [editText, setEditText] = useState("");
-  function Subfun(e) {
+  var [updateInput, setUpdateInput] = useState("");
+  console.log(edit);
+
+  function formSub(e) {
     e.preventDefault();
+    console.log(e);
     setList(list.concat(input));
     setInput("");
   }
-  function getData(e) {
+
+
+  async function dbData(){
+    
+  }
+
+  function inputData(e) {
+    console.log(e.target.value);
     setInput(e.target.value);
   }
-  function viewFun(value) {
-    setViewModal(true);
-    setViewText(value);
-    //  alert(value)
-  }
-  function CloseModal() {
-    setViewModal(false);
-  }
-  function DelFun(index) {
-    setList(list.filter((value, i) => i !== index));
-  }
-  // function EditFun(index) {
-  //   setEdit(index);
-  //   setEditText(list[index]);
-  // }
-  // function editTextFun(e) {
-  //   setEditText(e.target.value);
-  // }
-  // function updateFun() {
-  //   setList(list.map((value, index) => (edit === index ? editText : value)));
-  //   setEdit("");
-  // }
 
-  function updateFun(){
-    setList(list.map((value,index)=>(edit==index ? editText:value)))
-    setEdit("")
+  function showModal(value) {
+    setModal(true);
+    setViewText(value);
   }
-  function editTextFun(e){
-    
-    setEditText(e.target.value)
+  function closeModal() {
+    setModal(false);
+  }
+  function deleteFun(data) {
+    setList(list.filter((v, i) => v !== data));
   }
   function editFun(index) {
     setEdit(index);
-    setEditText(list[index])
-
+    setUpdateInput(list[index])
+  }
+  function updateFun(e) {
+    setUpdateInput(e.target.value);
+  }
+  function FunUpdate(){
+     setList(list.map((value, index) => (edit === index ? updateInput : value)));
+    setEdit("");
   }
   return (
-    <>
-      <form action="" className="input-group mt-5" onSubmit={Subfun}>
+    <div>
+      <form action="" className="p-5 input-group" onSubmit={formSub}>
         <input
           type="text"
           className="form-control"
-          onChange={getData}
+          onChange={inputData}
           value={input}
         />
-        <input type="submit" value="Submit" className="btn btn-primary" />
+        <input type="submit" className="btn btn-primary" />
       </form>
+      {list.length == 0
+        ? "no list found"
+        : list.map((value, index) => (
+            <table className="table border-primary table-bordered text-center my-5">
+              <thead>
+                <tr>
+                  <th>list</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr key={index}>
+                  <td>
+                    {edit === index ? (
+                      <input
+                        type="text"
+                        value={updateInput}
+                        onChange={updateFun}
+                      />
+                    ) : (
+                      value
+                    )}
+                  </td>
+                  <td className="d-flex justify-content-between">
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => showModal(value)}
+                    >
+                      view
+                    </button>
+                    {edit === index ? (
+                      <button className="btn btn-warning" onClick={FunUpdate}>Update</button>
+                    ) : (
+                      <button
+                        className="btn btn-warning"
+                        onClick={() => editFun(index)}
+                      >
+                        Edit
+                      </button>
+                    )}
 
-      {list.length === 0 ? (
-        <h1>NO Data Found</h1>
-      ) : (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>List</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {list.map((value, index) => (
-              <tr key={index}>
-                <td>
-                  {/* {edit === index ? (
-                    <input
-                      type="text"
-                      onChange={editTextFun}
-                      value={editText}
-                    />
-                  ) : (
-                    value
-                  )} */}
-
-                  {edit === index ? (<input type="text" onChange={editTextFun} value={editText}/>): value}
-                  
-                </td>
-                <td className="d-flex justify-content-between">
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => viewFun(value)}
-                  >
-                    View
-                  </button>
-                  {edit === index ? (
-                    <button className="btn btn-danger" onClick={updateFun}>update</button>
-                  ) : (
                     <button
                       className="btn btn-danger"
-                      onClick={() => editFun(index)}
+                      onClick={() => deleteFun(value)}
                     >
-                      Edit
+                      delete
                     </button>
-                  )}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          ))}
 
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => DelFun(index)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-
-      {/* view Modal */}
-      {viewModal && (
+      {modal && (
         <div className="modal fade show d-block modal-backdrop" tabIndex="-1">
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
@@ -133,7 +125,7 @@ function Crud2() {
                 <button
                   type="button"
                   className="btn-close"
-                  onClick={CloseModal}
+                  onClick={closeModal}
                 ></button>
               </div>
 
@@ -144,7 +136,7 @@ function Crud2() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
